@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.com.viettel.emsbackend.dto.EmployeeDto;
 import vn.com.viettel.emsbackend.service.EmployeeService;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -25,5 +26,22 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable("id") Long id) {
         EmployeeDto employeeDto = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(employeeDto, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees() {
+        List<EmployeeDto> employees = employeeService.getAllEmployees();
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable("id") Long employeeId, @RequestBody EmployeeDto employeeDto) {
+        EmployeeDto updatedEmployee = employeeService.updateEmployee(employeeId, employeeDto);
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteEmployee(@PathVariable("id") Long id) {
+        employeeService.deleteEmployee(id);
     }
 }
