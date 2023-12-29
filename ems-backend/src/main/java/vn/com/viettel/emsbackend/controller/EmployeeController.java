@@ -8,6 +8,7 @@ import vn.com.viettel.emsbackend.dto.EmployeeDto;
 import vn.com.viettel.emsbackend.service.EmployeeService;
 import java.util.List;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/employees")
