@@ -1,8 +1,10 @@
 package vn.com.viettel.emsbackend.service.impl;
 import lombok.AllArgsConstructor;
 import vn.com.viettel.emsbackend.dto.EmployeeDto;
+import vn.com.viettel.emsbackend.entity.Department;
 import vn.com.viettel.emsbackend.entity.Employee;
 import vn.com.viettel.emsbackend.mapper.EmployeeMapper;
+import vn.com.viettel.emsbackend.repository.DepartmentRepository;
 import vn.com.viettel.emsbackend.repository.EmployeeRepository;
 import vn.com.viettel.emsbackend.service.EmployeeService;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
+
+    private DepartmentRepository departmentRepository;
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
         Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        Department department = departmentRepository.findById(employeeDto.getDepartmentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department is not found with id " + employeeDto.getDepartmentId()));
+        employee.setDepartment(department);
         Employee savedEmployee = employeeRepository.save(employee);
         return EmployeeMapper.mapToEmployeeDTO(savedEmployee);
     }
@@ -44,6 +51,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setFirstName(employeeDto.getFirstName());
         employee.setLastName(employeeDto.getLastName());
         employee.setEmail(employeeDto.getEmail());
+
+        Department department = departmentRepository.findById(employeeDto.getDepartmentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department is not found with id " + employeeDto.getDepartmentId()));
+        employee.setDepartment(department);
 
         Employee savedEmployee = employeeRepository.save(employee);
         return EmployeeMapper.mapToEmployeeDTO(savedEmployee);

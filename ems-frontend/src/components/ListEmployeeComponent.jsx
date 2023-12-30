@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const ListEmployeeComponent = () => {
 
     const [employees, setEmployees] = useState([])
+    const [departments, setDepartments] = useState([]);
+    const [departmentName, setDepartmentName] = useState('')
 
     const navigator = useNavigate();
 
@@ -49,6 +51,7 @@ const ListEmployeeComponent = () => {
                         <th className='text-center' scope="col">First Name</th>
                         <th className='text-center' scope="col">Last Name</th>
                         <th className='text-center' scope="col">Email</th>
+                        <th className='text-center' scope="col">Department</th>
                         <th className='text-center' scope='col'>Action</th>
                     </tr>
                 </thead>
@@ -59,6 +62,7 @@ const ListEmployeeComponent = () => {
                             <td className='text-center'>{employee.firstName}</td>
                             <td className='text-center'>{employee.lastName}</td>
                             <td className='text-center'>{employee.email}</td>
+                            <td className='text-center'>{employee.departmentId}</td>
                             <td className='text-center'>
                                 <button className='btn btn-info' onClick={() => updateEmployee(employee.id)}>Update</button>
                                 <button className='btn btn-danger' onClick={() => removeEmployee(employee.id)} style={{marginLeft:'10px'}}>Delete</button>
